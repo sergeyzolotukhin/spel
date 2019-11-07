@@ -16,7 +16,7 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-expression', version: '5.2.1.RELEASE'
 
     // common utils
-//    compile 'com.google.guava:guava:28.1-jre'
+    compile 'com.google.guava:guava:28.1-jre'
 //    compile 'org.apache.commons:commons-text:1.7'
 //    compile 'org.apache.commons:commons-lang3:3.9'
 //    compile 'commons-io:commons-io:2.6'
