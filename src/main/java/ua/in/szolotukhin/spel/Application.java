@@ -27,7 +27,7 @@ public class Application {
 		StandardEvaluationContext context = new StandardEvaluationContext(parameters);
 
 		ExpressionParser parser = new SpelExpressionParser();
-		Expression exp = parser.parseExpression("tables.^[name == 'T1'].rows");
+		Expression exp = parser.parseExpression("table('T1').rows");
         List<Row> rows = (List<Row>) exp.getValue(context);
 
         rows.forEach(row -> log.info("Expression evaluation: {}", row.getValue("C2")));
