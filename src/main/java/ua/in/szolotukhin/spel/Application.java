@@ -1,14 +1,15 @@
 package ua.in.szolotukhin.spel;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+import ua.in.szolotukhin.spel.accessor.RowAccessor;
 import ua.in.szolotukhin.spel.model.Parameters;
 import ua.in.szolotukhin.spel.model.Row;
 import ua.in.szolotukhin.spel.model.Table;
+import ua.in.szolotukhin.spel.accessor.ValueAccessor;
 
 import java.util.List;
 
@@ -25,18 +26,20 @@ public class Application {
 				Table.of("T2", "T 2 description"),
 				Table.of("T3", "T 3 description"));
 
-		EvaluationContext context = new StandardEvaluationContext(parameters);
+		StandardEvaluationContext context = new StandardEvaluationContext(parameters);
+		context.addPropertyAccessor(new RowAccessor());
 
 		ExpressionParser parser = new SpelExpressionParser();
-		Expression exp = parser.parseExpression("rows('T1')");
+		Expression exp = parser.parseExpression("T1");
         List<Row> rows = (List<Row>) exp.getValue(context);
 
 		StandardEvaluationContext ctx = new StandardEvaluationContext();
+		ctx.addPropertyAccessor(new ValueAccessor());
 
 		for (Row row : rows) {
 			ctx.setRootObject(row);
 			ExpressionParser prs = new SpelExpressionParser();
-			Expression exp1 = prs.parseExpression("value('C1')");
+			Expression exp1 = prs.parseExpression("C1");
 			Object value = exp1.getValue(ctx);
 
 			log.info("Column value: {}", value);
