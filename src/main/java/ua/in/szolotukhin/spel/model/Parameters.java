@@ -11,14 +11,22 @@ import java.util.List;
 public class Parameters {
 	private final List<Table> tables;
 
-	public Table table(String name) {
-		return tables.stream()
-				.filter(table -> name.equals(table.getName()))
-				.findFirst()
-				.orElseThrow(() -> new IllegalStateException(String.format("Table [%s] not found", name)));
+	public List<Row> rows(String tableName) {
+		return table(tableName).getRows();
 	}
 
 	public static Parameters of(Table ... tables) {
 		return new Parameters(Arrays.asList(tables));
+	}
+
+	// ================================================================================================================
+	// private methods
+	// ================================================================================================================
+
+	private Table table(String name) {
+		return tables.stream()
+				.filter(table -> name.equals(table.getName()))
+				.findFirst()
+				.orElseThrow(() -> new IllegalStateException(String.format("Table [%s] not found", name)));
 	}
 }

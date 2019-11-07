@@ -12,13 +12,17 @@ import java.util.Map;
 public class Row {
 	private final Map<String, Object> columns;
 
-	public Object getValue(String columnName) {
+	public Object value(String columnName) {
 		return columns.get(columnName);
 	}
 
 	public static Row of(Object ... args) {
 		return new Row(columns(args));
 	}
+
+	// ================================================================================================================
+	// private methods
+	// ================================================================================================================
 
 	private static Map<String, Object> columns(Object ... args) {
 		Assert.notNull(args, "Args should be not null");
