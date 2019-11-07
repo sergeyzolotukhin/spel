@@ -26,11 +26,11 @@ public class Application {
 				Table.of("T2", "T 2 description"),
 				Table.of("T3", "T 3 description"));
 
-		StandardEvaluationContext context = new StandardEvaluationContext(parameters);
+		StandardEvaluationContext context = new StandardEvaluationContext();
 		context.addPropertyAccessor(new RowAccessor());
-
 		ExpressionParser parser = new SpelExpressionParser();
 		Expression exp = parser.parseExpression("T1");
+		context.setRootObject(parameters);
         List<Row> rows = (List<Row>) exp.getValue(context);
 
 		StandardEvaluationContext ctx = new StandardEvaluationContext();
